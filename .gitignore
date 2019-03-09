@@ -1,2 +1,4 @@
 config.py
 quip.py
+__pycache__
+*.pyc
