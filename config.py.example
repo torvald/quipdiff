@@ -1,0 +1,12 @@
+# Settings for quipdiff.py
+
+# Get your token at https://kolonialno.quip.com/dev/token
+token=""
+
+# Make sure the dir exists
+state_dir = "~/.quipdiff/"
+
+# Use the whole URL
+threads = [
+        'https://organizaion.quip.com/O14x234eT/Test-document'
+        ]
