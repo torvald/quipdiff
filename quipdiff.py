@@ -65,10 +65,10 @@ for url in threads:
     # We'll get the content of the document from last run in our state folder
     thread_content_state = get_thread_content_from_state(thread_id)
 
-    diff = diff(thread_content_state, thread_content_now)
+    diff_output = diff(thread_content_state, thread_content_now)
 
     # Print to stdout if any changes
-    if diff:
+    if diff_output:
         save_thread(thread_id, thread_content_now)
         print(' ***** {} ***** '.format(url))
-        print("\n" + diff + "\n")
+        print("\n" + diff_output + "\n")
