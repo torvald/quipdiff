@@ -18,3 +18,7 @@ Test the it with
 And add it to cron on a terminal server near you for profit
 
   0 * * * * python /home/badguy90/dev/quipdiff/quipdiff.py
+
+## TODO
+
+ * Better error handeling
