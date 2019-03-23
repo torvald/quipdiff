@@ -1,11 +1,10 @@
-#!/usr/bin/python3
-
 import difflib
 import os
 import quip
 from bs4 import BeautifulSoup
 
 import config
+from utils.mail import send_mail
 
 token = config.token
 state_dir = config.state_dir
@@ -15,18 +14,19 @@ client = quip.QuipClient(access_token=token)
 user = client.get_authenticated_user()
 
 
-def get_thread_content(thread_id):
+def get_thread(thread_id):
     q = client.get_thread(thread_id)
+    title = q['thread']['title']
     html = q.get("html")
     parsed_html = BeautifulSoup(html, 'html.parser')
     parsed_html = parsed_html.prettify()
-    return parsed_html
-
+    return title, parsed_html
 
 def get_thread_content_from_state(thread_id):
     filename = "{}/{}".format(state_dir, thread_id)
     with open(filename) as f:
         thread_content = f.read()
+
     return thread_content
 
 
@@ -57,7 +57,7 @@ def extract_thread_ids(url):
 for url in threads:
     # Extract thread_id and content of current version in Quip
     thread_id = extract_thread_ids(url)
-    thread_content_now = get_thread_content(thread_id)
+    thread_title, thread_content_now = get_thread(thread_id)
 
     # If we have never seen the document before, save it to state and continue
     # to next document
@@ -72,6 +72,22 @@ for url in threads:
 
     # Print to stdout if any changes
     if diff_output:
+        # Store the new content for next round
         save_thread(thread_id, thread_content_now)
-        print(' ***** {} ***** '.format(url))
-        print("\n" + diff_output + "\n")
+
+        if config.output == "gmailsmtp":
+            # Sending one mail per thread with diff
+            username = config.smtp_username
+            password = config.smtp_password
+            smtp_recipient = config.smtp_recipient
+            subject = "Quipdiff in {}".format(thread_title)
+            body = (' ***** {} ***** \n ***** {} ***** \n\n {}'.format(
+                       thread_title, url, diff_output)
+                   )
+            send_mail(username, password, smtp_recipient, subject, body)
+
+        else:
+            # stderr
+            print(' ***** {} ***** '.format(thread_title))
+            print(' ***** {} ***** '.format(url))
+            print("\n" + diff_output + "\n")

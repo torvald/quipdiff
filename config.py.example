@@ -10,3 +10,12 @@ state_dir = "~/.quipdiff/"
 threads = [
         'https://organizaion.quip.com/O14x234eT/Test-document'
         ]
+
+output = "stdout" # <stdout|gmailsmtp>
+
+# Gmail settings
+smtp_username = "yourmail@gmail.com"
+# Get an app password from Gmails settings
+smtp_password = "app-password"
+# recipient(s), string or list of strings
+smtp_recipient = "yourmail+quipdiff@gmail.com"
