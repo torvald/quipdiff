@@ -3,6 +3,7 @@
 import difflib
 import os
 import quip
+from bs4 import BeautifulSoup
 
 import config
 
@@ -17,7 +18,9 @@ user = client.get_authenticated_user()
 def get_thread_content(thread_id):
     q = client.get_thread(thread_id)
     html = q.get("html")
-    return html
+    parsed_html = BeautifulSoup(html, 'html.parser')
+    parsed_html = parsed_html.prettify()
+    return parsed_html
 
 
 def get_thread_content_from_state(thread_id):
