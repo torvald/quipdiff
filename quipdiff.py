@@ -81,9 +81,7 @@ for url in threads:
             password = config.smtp_password
             smtp_recipient = config.smtp_recipient
             subject = "Quipdiff in {}".format(thread_title)
-            body = (' ***** {} ***** \n ***** {} ***** \n\n {}'.format(
-                       thread_title, url, diff_output)
-                   )
+            body = (' ***** {} ***** \n\n {}'.format(url, diff_output))
             send_mail(username, password, smtp_recipient, subject, body)
 
         else:
