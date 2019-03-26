@@ -19,3 +19,5 @@ smtp_username = "yourmail@gmail.com"
 smtp_password = "app-password"
 # recipient(s), string or list of strings
 smtp_recipient = "yourmail+quipdiff@gmail.com"
+
+output_format = "text" # <text|html|markdown>

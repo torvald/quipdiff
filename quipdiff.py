@@ -10,6 +10,8 @@ token = config.token
 state_dir = config.state_dir
 threads = config.threads
 
+output_format = config.output_format
+
 client = quip.QuipClient(access_token=token)
 user = client.get_authenticated_user()
 
@@ -19,8 +21,18 @@ def get_thread(thread_id):
     title = q['thread']['title']
     html = q.get("html")
     parsed_html = BeautifulSoup(html, 'html.parser')
-    parsed_html = parsed_html.prettify()
-    return title, parsed_html
+
+    if output_format == "text":
+        content = parsed_html.get_text()
+    elif output_format == "html":
+        content = parsed_html.prettify()
+    elif output_format == "markdown":
+        import html2markdown
+        content = html2markdown.convert(html)
+    else:
+        raise Exception("no valid output_format in settings")
+
+    return title, content
 
 def get_thread_content_from_state(thread_id):
     filename = "{}/{}".format(state_dir, thread_id)

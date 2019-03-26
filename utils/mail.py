@@ -24,7 +24,6 @@ def send_mail(user, pwd, recipient, subject, body):
         server.login(user, pwd)
         server.sendmail(FROM, TO, msg.as_string())
         server.close()
-        print('successfully sent the mail')
     except Exception as e:
         import traceback
         print(traceback.format_exc())
