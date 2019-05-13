@@ -5,6 +5,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+
 def send_mail(user, pwd, recipient, subject, body):
 
     FROM = user
@@ -26,4 +27,5 @@ def send_mail(user, pwd, recipient, subject, body):
         server.close()
     except Exception as e:
         import traceback
+
         print(traceback.format_exc())
