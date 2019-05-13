@@ -4,7 +4,7 @@ import quip
 from bs4 import BeautifulSoup
 
 import config
-from utils.mail import send_mail
+from utils.mail import send_mail, html_enclose, html_colorize_diff
 
 token = config.token
 state_dir = config.state_dir
@@ -92,8 +92,11 @@ for url in threads:
             password = config.smtp_password
             smtp_recipient = config.smtp_recipient
             subject = "Quipdiff in {}".format(thread_title)
-            body = " ***** {} ***** \n\n {}".format(url, diff_output)
-            send_mail(username, password, smtp_recipient, subject, body)
+            body_plain = " ***** {} ***** \n\n {}".format(url, diff_output)
+            body_html = html_enclose(html_colorize_diff(body_plain))
+            send_mail(
+                username, password, smtp_recipient, subject, body_plain, body_html
+            )
 
         else:
             # stderr
