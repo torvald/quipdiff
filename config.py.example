@@ -6,8 +6,18 @@ token = ""
 # Make sure the dir exists
 state_dir = "~/.quipdiff/"
 
+# We request content from Quip once per document
+# Quip rate limits 50 requests per minute and 900 per hour
+#
 # Use the whole URL
 threads = ["https://organizaion.quip.com/O14x234eT/Test-document"]
+# Or the id from the URL
+thread_ids = []
+# Or a folder's id, not sure how to derive it from the GUI
+folder_ids = []
+
+# Include every document which is stared, and documents in starred folders
+diff_starred = True
 
 output = "stdout"  # <stdout|gmailsmtp>
 
