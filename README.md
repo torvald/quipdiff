@@ -32,7 +32,7 @@ With colors of you choosing to go in `.muttrc`.
  git clone https://github.com/quip/quip-api.git
  cd quipdiff
  ln -s ../quip-api/python/quip.py quip.py
- cp config.py.example config.py 
+ cp config.py.example config.py
  vim config.py
  ```
 
